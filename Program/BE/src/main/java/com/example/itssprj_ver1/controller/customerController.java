@@ -30,7 +30,7 @@ public class customerController {
     private final exerSession exerSession;
     private final memRegService memRegService;
 
-    @GetMapping("/getCustomer")
+    @GetMapping("/getCustomer") // Lấy thông tin khách hàng
     public ResponseEntity<Map<String, Object>> getCustomer(@RequestHeader(value = "token", required = false) String token,
                                                            @RequestParam(value = "userId", required = false) Integer userId) {
         Map<String, Object> response = new HashMap<>();
@@ -62,7 +62,7 @@ public class customerController {
         }
     }
 
-    @PostMapping("/addReview")
+    @PostMapping("/addReview") // Thêm đánh giá
     public ResponseEntity<Map<String, Object>> addReview(@RequestHeader(value = "token", required = false) String token,
                                                          @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -96,7 +96,7 @@ public class customerController {
         }
     }
 
-    @GetMapping("/getReviews")
+    @GetMapping("/getReviews") // Lấy danh sách đánh giá
     public ResponseEntity<Map<String, Object>> getReview(@RequestHeader(value = "token", required = false) String token) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -122,7 +122,7 @@ public class customerController {
         }
     }
 
-    @PostMapping("/getPayment")
+    @PostMapping("/getPayment") // Lấy danh sách thanh toán
     public ResponseEntity<Map<String, Object>> getPayment(@RequestHeader (value = "token", required = false) String token,
                                                           @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -151,7 +151,7 @@ public class customerController {
         }
     }
 
-    @PostMapping("/getSession")
+    @PostMapping("/getSession") // Lấy danh sách buổi tập
     public ResponseEntity<Map<String, Object>> getSession(@RequestHeader (value = "token", required = false) String token,
                                                           @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -180,7 +180,7 @@ public class customerController {
         }
     }
 
-    @GetMapping("/getpackages")
+    @GetMapping("/getpackages") // Lấy danh sách gói tập
     public ResponseEntity<Map<String,Object>> getMemberships(@RequestHeader(value = "token", required = false) String token) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -206,7 +206,7 @@ public class customerController {
         }
     }
 
-    @PostMapping("/getMemberRegistration")
+    @PostMapping("/getMemberRegistration") // Lấy danh sách đăng ký thành viên
     public ResponseEntity<Map<String, Object>> getMemberRegistration(@RequestHeader(value = "token", required = false) String token,
                                                                      @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
