@@ -294,9 +294,9 @@ const handleMenuClick = (menuId) => {
     <!-- Main Content -->
     <div class="main-content">
       <div class="header-actions">
-        <h1 class="title">Danh sách hội viên</h1>
+        <h1 class="title">Danh sách khách hàng</h1>
         <button @click="toggleAddForm" class="add-button">
-          <span v-if="!showAddForm">+ Thêm hội viên mới</span>
+          <span v-if="!showAddForm">+ Thêm khách hàng mới</span>
           <span v-else>Ẩn form</span>
         </button>
       </div>
@@ -308,7 +308,7 @@ const handleMenuClick = (menuId) => {
       
       <!-- Add Customer Form -->
       <div v-if="showAddForm" class="form-container">
-        <h2 class="form-title">Thêm hội viên mới</h2>
+        <h2 class="form-title">Thêm khách hàng mới</h2>
 
         <form @submit.prevent="submitCustomer" class="add-form">
           <!-- Form thêm mới -->
@@ -376,13 +376,13 @@ const handleMenuClick = (menuId) => {
 
       <!-- Edit Customer Form -->
       <div v-if="showEditForm" id="edit-form" class="form-container edit-form-container">
-        <h2 class="form-title"><i class="fas fa-edit form-icon"></i> Sửa thông tin hội viên</h2>
+        <h2 class="form-title"><i class="fas fa-edit form-icon"></i> Sửa thông tin khách hàng</h2>
 
         <form @submit.prevent="submitEdit" class="edit-form">
           <div class="form-group">
-            <label for="edit-customer-id">Mã hội viên</label>
+            <label for="edit-customer-id">Mã khách hàng</label>
             <input type="text" id="edit-customer-id" v-model="editingMember.customerId" class="form-control disabled-field" readonly disabled />
-            <small class="help-text">Mã hội viên không thể thay đổi</small>
+            <small class="help-text">Mã khách hàng không thể thay đổi</small>
           </div>
 
           <div class="form-group">

@@ -31,10 +31,10 @@ const goToHome = () => {
 const menuItems = ref([
   { id: 'dashboard', text: 'Tổng quan', icon: 'fas fa-home', route: '/customerHome' },
   { id: 'infocustomer', text: 'Thông tin cá nhân', icon: 'fas fa-users', route: '/infocustomer' },
-  { id: 'classes', text: 'Lớp tập', icon: 'fas fa-dumbbell', route: '/classes' },
-  { id: 'extend', text: 'Thông tin gói tập', icon: 'fas fa-user-tie', route: '/extend' },
-  { id: 'review', text: 'Đánh giá của khách hàng', icon: 'fas fa-cog', route: '/review' },
-  { id: 'payment', text: 'Thông tin thanh toán', icon: 'fas fa-credit-card', route: '/payment' }
+  { id: 'class', text: 'Lớp tập', icon: 'fas fa-dumbbell', route: '/class' },
+  { id: 'extendss', text: 'Thông tin gói tập', icon: 'fas fa-user-tie', route: '/extendss' },
+  { id: 'reviews', text: 'Đánh giá của khách hàng', icon: 'fas fa-cog', route: '/reviewss' },
+  { id: 'payments', text: 'Thông tin thanh toán', icon: 'fas fa-credit-card', route: '/payments' }
 ]);
 </script>
 
@@ -45,7 +45,7 @@ const menuItems = ref([
         <div class="logo-icon">
           <i class="fas fa-dumbbell"></i>
         </div>
-        <div class="logo-text">PIG GYM</div>
+        <div class="logo-text">GYM</div>
       </div>
     </div>
     <ul class="menu-list">
@@ -61,9 +61,9 @@ const menuItems = ref([
         <div class="menu-text">{{ item.text }}</div>
       </li>
     </ul>
-    <div class="sidebar-footer">
+    <div  @click="goToHome" class="sidebar-footer">
       <div class="account-info">
-        <div  @click="goToHome" class="avatar-small">Đăng xuất</div>
+        <div class="avatar-small">Đăng xuất</div>
       </div>
     </div>
   </div>
