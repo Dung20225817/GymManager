@@ -20,7 +20,7 @@ import static com.example.itssprj_ver1.config.GenToken.generateToken;
 public class adminController {
     private final ptService ptService;
 
-    @GetMapping("/getAllPT")
+    @GetMapping("/getAllPT") // lấy tất cả PT
     public ResponseEntity<Map<String, Object>> getAllPT(@RequestHeader(value = "token", required = false) String token) {
         Map<String, Object> response = new HashMap<>();
         try {
