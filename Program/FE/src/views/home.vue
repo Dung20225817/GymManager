@@ -31,7 +31,7 @@ const scrollToPrice = () => {
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <h1>PIG GYM</h1>
+        <h1>GYM</h1>
       </div>
       <nav class="nav">
         <ul>
@@ -48,14 +48,14 @@ const scrollToPrice = () => {
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1>Biến đổi cơ thể, nâng tầm cuộc sống</h1>
-        <p>Tham gia PIG GYM ngay hôm nay để chinh phục mục tiêu sức khỏe của bạn!</p>
+        <h1>Thay đổi cơ thể, nâng tầm cuộc sống</h1>
+        <p>Tham gia ngay hôm nay để chinh phục mục tiêu sức khỏe của bạn!</p>
       </div>
     </section>
 
     <!-- Features Section -->
     <section class="features">
-      <h2>Tại sao chọn PIG GYM?</h2>
+      <h2>Tại sao chọn chúng tôi?</h2>
       <div class="features-grid">
         <div class="feature-item">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -157,7 +157,7 @@ const scrollToPrice = () => {
 
     <!-- Footer -->
     <footer id="footer" class="footer">
-      <p>PIG GYM - Sức khỏe là vàng</p>
+      <p>Có sức khỏe là có tất cả</p>
       <div class="social-links">
         <a href="https://www.facebook.com/piggym2020?fbclid=PAZXh0bgNhZW0CMTEAAaeLF-VPJjRJHRrSM_f-PZ1N-2EpwKyRttZmYXP5C9XtJ0jzrEulvp07n-3SCg_aem_Dep9AZ1Z44BbeVQ2HzAUew"><img width="50" height="50" src="https://img.icons8.com/ios-filled/50/facebook-new.png" alt="facebook-new"/></a>
         <a href="https://www.instagram.com/piggym.2020/"><img width="60" height="60" src="https://img.icons8.com/ios-glyphs/60/instagram-new.png" alt="instagram-new" /></a>
