@@ -33,73 +33,73 @@ public class customerController {
     @PostMapping("/getCustomer")
     public ResponseEntity<Map<String, Object>> getCustomer(@RequestHeader(value = "token", required = false) String token,
                                                             @RequestBody Map<String, String> request) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> resp = new HashMap<>();
         try {
             if (token == null || token.isEmpty()) {
-                response.put("status", "error");
-                response.put("message", "Token is missing");
-                return ResponseEntity.badRequest().body(response);
+                resp.put("status", "error");
+                resp.put("message", "Token is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
             int userId = Integer.parseInt(request.get("userid"));
 
             if (userId <= 0) {
-                response.put("status", "error");
-                response.put("message", "User ID is missing");
-                return ResponseEntity.badRequest().body(response);
+                resp.put("status", "error");
+                resp.put("message", "User ID is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
             customer customer = customerService.infoCustomer(userId);
             if (customer != null) {
-                response.put("status", "success");
-                response.put("customerId" , customer.getId());
-                response.put("name" , customer.getFirstname() + " " + customer.getLastname());
-                response.put("phone" , customer.getPhone());
-                response.put("email" , customer.getEmail());
-                response.put("age" , customer.getAge());
-                response.put("gender" , customer.getGender());
-                return ResponseEntity.ok(response);
+                resp.put("status", "success");
+                resp.put("customerId" , customer.getId());
+                resp.put("name" , customer.getFirstname() + " " + customer.getLastname());
+                resp.put("phone" , customer.getPhone());
+                resp.put("email" , customer.getEmail());
+                resp.put("age" , customer.getAge());
+                resp.put("gender" , customer.getGender());
+                return ResponseEntity.ok(resp);
             } else {
-                response.put("status", "error");
-                response.put("message", "Customer not found");
-                return ResponseEntity.status(404).body(response);
+                resp.put("status", "error");
+                resp.put("message", "Customer not found");
+                return ResponseEntity.status(404).body(resp);
             }
         } catch (Exception e) {
-            response.put("status", "error");
-            response.put("message", "An error occurred: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
+            resp.put("status", "error");
+            resp.put("message", "An error occurred: " + e.getMessage());
+            return ResponseEntity.status(500).body(resp);
         }
     }
 
     @PostMapping("/addReview")
     public ResponseEntity<Map<String, Object>> addReview(@RequestHeader(value = "token", required = false) String token,
                                                          @RequestBody Map<String, String> request) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> resp = new HashMap<>();
         try {
             if (token == null || token.isEmpty()) {
-                response.put("status", "error");
-                response.put("message", "Token is missing");
-                return ResponseEntity.badRequest().body(response);
+                resp.put("status", "error");
+                resp.put("message", "Token is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
             int userId = Integer.parseInt(request.get("userid"));
             String text = request.get("text");
             if (text == null || text.isEmpty()) {
-                response.put("status", "error");
-                response.put("message", "Review text is missing");
-                return ResponseEntity.badRequest().body(response);
+                resp.put("status", "error");
+                resp.put("message", "Review text is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
             boolean success = reviewService.addReview(userId, text);
             if (success) {
-                response.put("status", "success");
-                response.put("message", "Review added successfully");
+                resp.put("status", "success");
+                resp.put("message", "Review added successfully");
                 return ResponseEntity.ok(response);
             } else {
-                response.put("status", "error");
-                response.put("message", "Failed to add review");
-                return ResponseEntity.status(500).body(response);
+                resp.put("status", "error");
+                resp.put("message", "Failed to add review");
+                return ResponseEntity.status(500).body(resp);
             }
         } catch (Exception e) {
-            response.put("status", "error");
-            response.put("message", "An error occurred: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
+            resp.put("status", "error");
+            resp.put("message", "An error occurred: " + e.getMessage());
+            return ResponseEntity.status(500).body(resp);
         }
     }
 
