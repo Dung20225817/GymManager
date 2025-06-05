@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -123,7 +124,7 @@ public class exerSession implements exerSessionI {
     }
 
     @Override
-    public boolean addSession(int customerid, int ptid,String exerciseType) {
+    public boolean addSession(int customerid, int ptid, String exerciseType, Timestamp beginAt) {
         customer customer = customerRepository.findById(customerid);
         if (customer == null) {
             return false;
@@ -143,6 +144,7 @@ public class exerSession implements exerSessionI {
                         .customer(customer)
                         .staff(staff)
                         .ExerciseType(exerciseType)
+                        .beginAt(beginAt.toLocalDateTime()) // <<< thêm dòng này
                         .build();
 
                 // Lưu buổi tập vào database

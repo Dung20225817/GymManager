@@ -300,6 +300,12 @@ const updateExtend = async () => {
     if (!token) return;
 
     // Gọi API cập nhật
+    console.log({
+        memberRegId: editingItem.value.id,
+        status: editingItem.value.status,
+        beginAt: editingItem.value.beginAt,
+        endAt: editingItem.value.endAt
+      });
     const response = await axios.post(
       `${API_BASE_URL}/updateMemberRegister`,
       {
