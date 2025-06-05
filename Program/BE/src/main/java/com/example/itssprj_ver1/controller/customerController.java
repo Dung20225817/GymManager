@@ -30,74 +30,82 @@ public class customerController {
     private final exerSession exerSession;
     private final memRegService memRegService;
 
-    @GetMapping("/getCustomer") // Lấy thông tin khách hàng
+    @PostMapping("/getCustomer")
     public ResponseEntity<Map<String, Object>> getCustomer(@RequestHeader(value = "token", required = false) String token,
-                                                           @RequestParam(value = "userId", required = false) Integer userId) {
-        Map<String, Object> response = new HashMap<>();
+                                                            @RequestBody Map<String, String> request) {
+        Map<String, Object> resp = new HashMap<>();
         try {
             if (token == null || token.isEmpty()) {
-                response.put("status", "error");
-                response.put("message", "Token is missing");
-                return ResponseEntity.badRequest().body(response);
+                resp.put("status", "error");
+                resp.put("message", "Token is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
-            if (userId == null) {
-                response.put("status", "error");
-                response.put("message", "User ID is missing");
-                return ResponseEntity.badRequest().body(response);
+            int userId = Integer.parseInt(request.get("userid"));
+
+            if (userId <= 0) {
+                resp.put("status", "error");
+                resp.put("message", "User ID is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
-            List<Map<String, Object>> customerData = customerService.infoCustomer(userId);
-            if (customerData != null) {
-                response.put("status", "success");
-                response.put("data", customerData);
-                return ResponseEntity.ok(response);
+            customer customer = customerService.infoCustomer(userId);
+            if (customer != null) {
+                resp.put("status", "success");
+                resp.put("customerId" , customer.getId());
+                resp.put("name" , customer.getFirstname() + " " + customer.getLastname());
+                resp.put("phone" , customer.getPhone());
+                resp.put("email" , customer.getEmail());
+                resp.put("age" , customer.getAge());
+                resp.put("gender" , customer.getGender());
+                return ResponseEntity.ok(resp);
             } else {
-                response.put("status", "error");
-                response.put("message", "Customer not found");
-                return ResponseEntity.status(404).body(response);
+                resp.put("status", "error");
+                resp.put("message", "Customer not found");
+                return ResponseEntity.status(404).body(resp);
             }
         } catch (Exception e) {
-            response.put("status", "error");
-            response.put("message", "An error occurred: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
+            resp.put("status", "error");
+            resp.put("message", "An error occurred: " + e.getMessage());
+            return ResponseEntity.status(500).body(resp);
         }
     }
 
-    @PostMapping("/addReview") // Thêm đánh giá
+    @PostMapping("/addReview")
     public ResponseEntity<Map<String, Object>> addReview(@RequestHeader(value = "token", required = false) String token,
                                                          @RequestBody Map<String, String> request) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> resp = new HashMap<>();
         try {
             if (token == null || token.isEmpty()) {
-                response.put("status", "error");
-                response.put("message", "Token is missing");
-                return ResponseEntity.badRequest().body(response);
+                resp.put("status", "error");
+                resp.put("message", "Token is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
-            int userId = Integer.parseInt(request.get("userId"));
+            int userId = Integer.parseInt(request.get("userid"));
             String text = request.get("text");
             if (text == null || text.isEmpty()) {
-                response.put("status", "error");
-                response.put("message", "Review text is missing");
-                return ResponseEntity.badRequest().body(response);
+                resp.put("status", "error");
+                resp.put("message", "Review text is missing");
+                return ResponseEntity.badRequest().body(resp);
             }
             boolean success = reviewService.addReview(userId, text);
             if (success) {
-                response.put("status", "success");
-                response.put("message", "Review added successfully");
+                resp.put("status", "success");
+                resp.put("message", "Review added successfully");
                 return ResponseEntity.ok(response);
             } else {
-                response.put("status", "error");
-                response.put("message", "Failed to add review");
-                return ResponseEntity.status(500).body(response);
+                resp.put("status", "error");
+                resp.put("message", "Failed to add review");
+                return ResponseEntity.status(500).body(resp);
             }
         } catch (Exception e) {
-            response.put("status", "error");
-            response.put("message", "An error occurred: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
+            resp.put("status", "error");
+            resp.put("message", "An error occurred: " + e.getMessage());
+            return ResponseEntity.status(500).body(resp);
         }
     }
 
-    @GetMapping("/getReviews") // Lấy danh sách đánh giá
-    public ResponseEntity<Map<String, Object>> getReview(@RequestHeader(value = "token", required = false) String token) {
+    @PostMapping("/getReviews")
+    public ResponseEntity<Map<String, Object>> getReview(@RequestHeader(value = "token", required = false) String token,
+                                                         @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
         try {
             // Kiểm tra token
@@ -107,7 +115,8 @@ public class customerController {
                 return ResponseEntity.badRequest().body(response);
             }
 
-            List<Map<String, Object>> reviews = reviewService.getReview();
+            int userid = Integer.parseInt(request.get("userid"));
+            List<Map<String, Object>> reviews = reviewService.getReview(userid);
             if (reviewService.getReview() != null) {
                 response.put("status", "Lấy danh sách review thành công");
                 response.put("data", reviews);
@@ -122,7 +131,7 @@ public class customerController {
         }
     }
 
-    @PostMapping("/getPayment") // Lấy danh sách thanh toán
+    @PostMapping("/getPayment")
     public ResponseEntity<Map<String, Object>> getPayment(@RequestHeader (value = "token", required = false) String token,
                                                           @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -134,7 +143,7 @@ public class customerController {
                 return ResponseEntity.badRequest().body(response);
             }
 
-            int userId = Integer.parseInt(request.get("userId"));
+            int userId = Integer.parseInt(request.get("userid"));
 
             List<Map<String, Object>> payments = paymentService.getAllPayment(userId);
             if (payments != null) {
@@ -151,7 +160,7 @@ public class customerController {
         }
     }
 
-    @PostMapping("/getSession") // Lấy danh sách buổi tập
+    @PostMapping("/getSession")
     public ResponseEntity<Map<String, Object>> getSession(@RequestHeader (value = "token", required = false) String token,
                                                           @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -163,7 +172,7 @@ public class customerController {
                 return ResponseEntity.badRequest().body(response);
             }
 
-            int userId = Integer.parseInt(request.get("userId"));
+            int userId = Integer.parseInt(request.get("userid"));
 
             List<Map<String, Object>> sessions = exerSession.getAllSession(userId);
             if (sessions != null) {
@@ -180,8 +189,9 @@ public class customerController {
         }
     }
 
-    @GetMapping("/getpackages") // Lấy danh sách gói tập
-    public ResponseEntity<Map<String,Object>> getMemberships(@RequestHeader(value = "token", required = false) String token) {
+    @PostMapping("/getpackages")
+    public ResponseEntity<Map<String,Object>> getMemberships(@RequestHeader(value = "token", required = false) String token,
+                                                             @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
         try {
             // Kiểm tra token
@@ -191,7 +201,8 @@ public class customerController {
                 return ResponseEntity.badRequest().body(response);
             }
 
-            List<Map<String, Object>> memberships = membershipService.getMembership();
+            int userId = Integer.parseInt(request.get("userid"));
+            List<Map<String, Object>> memberships = membershipService.getMembership(userId);
             if (memberships != null) {
                 response.put("status", "Lấy danh sách gói tập thành công");
                 response.put("list", memberships);
@@ -206,7 +217,7 @@ public class customerController {
         }
     }
 
-    @PostMapping("/getMemberRegistration") // Lấy danh sách đăng ký thành viên
+    @PostMapping("/getMemberRegistration")
     public ResponseEntity<Map<String, Object>> getMemberRegistration(@RequestHeader(value = "token", required = false) String token,
                                                                      @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -218,7 +229,7 @@ public class customerController {
                 return ResponseEntity.badRequest().body(response);
             }
 
-            int userId = Integer.parseInt(request.get("userId"));
+            int userId = Integer.parseInt(request.get("userid"));
 
             List<Map<String, Object>> memReg = memRegService.getAllMemberRegByCustomer(userId);
             if (memReg != null) {
