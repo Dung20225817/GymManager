@@ -26,11 +26,7 @@ public class ptController {
     private final exerSession exerSession;
     private final ptService ptService;
 
-<<<<<<< HEAD
     @PostMapping("/getInfoPt") // Phương thức lấy info pt
-=======
-    @PostMapping("/getInfoPt")
->>>>>>> 76a4d0b8eec43ac1a6039a63262f9223f11c0851
     public ResponseEntity<Map<String, Object>> getInfoPt(@RequestHeader(value = "token", required = false) String token,
                                                          @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -59,12 +55,12 @@ public class ptController {
             }
         } catch (Exception e) {
             response.put("status", "error");
-            response.put("message", "An error occurred: " + e.getMessage());
+            response.put("message", "Error occurred: " + e.getMessage());
             return ResponseEntity.status(500).body(response);
         }
     }
 
-    @PostMapping("/getSession")
+    @PostMapping("/getSession") //lấy session
     public ResponseEntity<Map<String, Object>> getSession(@RequestHeader(value = "token", required = false) String token,
                                                           @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -88,13 +84,13 @@ public class ptController {
             }
         } catch (Exception e) {
             response.put("status", "error");
-            response.put("message", "An error occurred: " + e.getMessage());
+            response.put("message", "Error occurred: " + e.getMessage());
             return ResponseEntity.status(500).body(response);
         }
     }
 
 
-    @PostMapping("/updateSession")
+    @PostMapping("/updateSession") //Cập nhật session
     public ResponseEntity<Map<String, Object>> updateSession(@RequestHeader(value = "token", required = false) String token,
                                                               @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -118,7 +114,7 @@ public class ptController {
                     endAt = LocalDateTime.parse(endAtStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
                 }
             } catch (Exception e) {
-                throw new IllegalArgumentException("Định dạng ngày tháng không hợp lệ: " + e.getMessage());
+                throw new IllegalArgumentException("Invalid date format: " + e.getMessage());
             }
             String description = request.get("description");
 
