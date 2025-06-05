@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.Date;
@@ -269,9 +270,10 @@ public class managerController {
             // Kiểm tra các trường bắt buộc
             int customerid = Integer.parseInt(request.get("customerid"));
             int ptid = Integer.parseInt(request.get("ptid"));
+            Timestamp beginAt = new Timestamp(System.currentTimeMillis());
             String exerciseType = request.get("exerciseType");
 
-            if (exerSession.addSession(customerid, ptid, exerciseType)) {
+            if (exerSession.addSession(customerid, ptid, exerciseType, beginAt)){
                 response.put("status", "Thêm buổi tập thành công");
                 return ResponseEntity.ok(response);
             } else {
@@ -379,7 +381,6 @@ public class managerController {
                     beginAt = Date.valueOf(beginAtStr);
                 }
                 if (request.containsKey("endAt") && !request.get("endAt").isEmpty()) {
-
                     String endAtStr = request.get("endAt");
                     endAt = Date.valueOf(endAtStr);
                 }
@@ -434,7 +435,13 @@ public class managerController {
             } catch (Exception e) {
                 throw new IllegalArgumentException("Định dạng ngày tháng không hợp lệ: " + e.getMessage());
             }
-            if (beginAt != null && endAt != null && beginAt.after(endAt)) {
+            if (beginAt != null && endAt != null) {
+                if (beginAt.after(endAt)) {
+                    response.put("message", "Thời gian bắt đầu không được sau thời gian kết thúc");
+                    return ResponseEntity.badRequest().body(response);
+                }
+
+                // Cập nhật nếu thời gian hợp lệ
                 if (memRegService.updateMemberReg(memberRegId, status, beginAt, endAt)) {
                     response.put("status", "Sửa thông tin đăng ký gói tập thành công");
                     return ResponseEntity.ok(response);
@@ -443,6 +450,7 @@ public class managerController {
                     return ResponseEntity.status(400).body(response);
                 }
             } else {
+                // Xử lý xóa
                 if (memRegService.deleteMemberReg(memberRegId, status)) {
                     response.put("status", "Xóa thông tin đăng ký gói tập thành công");
                     return ResponseEntity.ok(response);
