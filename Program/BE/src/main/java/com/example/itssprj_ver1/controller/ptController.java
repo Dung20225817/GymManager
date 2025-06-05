@@ -26,14 +26,18 @@ public class ptController {
     private final exerSession exerSession;
     private final ptService ptService;
 
+<<<<<<< HEAD
     @PostMapping("/getInfoPt") // Phương thức lấy info pt
+=======
+    @PostMapping("/getInfoPt")
+>>>>>>> 76a4d0b8eec43ac1a6039a63262f9223f11c0851
     public ResponseEntity<Map<String, Object>> getInfoPt(@RequestHeader(value = "token", required = false) String token,
                                                          @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
         try {
             if (token == null || token.isEmpty()) {
                 response.put("status", "error");
-                response.put("message", "Token missing");
+                response.put("message", "Token is missing");
                 return ResponseEntity.badRequest().body(response);
             }
             int userId = Integer.parseInt(request.get("userid"));
@@ -50,17 +54,17 @@ public class ptController {
                 return ResponseEntity.ok(response);
             } else {
                 response.put("status", "error");
-                response.put("message", "No information found");
+                response.put("message", "No information found for the given user ID");
                 return ResponseEntity.status(404).body(response);
             }
         } catch (Exception e) {
             response.put("status", "error");
-            response.put("message", "Error occurred: " + e.getMessage());
+            response.put("message", "An error occurred: " + e.getMessage());
             return ResponseEntity.status(500).body(response);
         }
     }
 
-    @PostMapping("/getSession") //List session
+    @PostMapping("/getSession")
     public ResponseEntity<Map<String, Object>> getSession(@RequestHeader(value = "token", required = false) String token,
                                                           @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -72,7 +76,8 @@ public class ptController {
             }
             int userId = Integer.parseInt(request.get("userid"));
             List<Map<String, Object>> sessions = exerSession.getAllSessionByPT(userId);
-            if (sessions != null && token != null) {
+
+            if (sessions != null) {
                 response.put("status", "success");
                 response.put("data", sessions);
                 return ResponseEntity.ok(response);
@@ -88,7 +93,8 @@ public class ptController {
         }
     }
 
-    @PostMapping("/updateSession") //Cập nhật session
+
+    @PostMapping("/updateSession")
     public ResponseEntity<Map<String, Object>> updateSession(@RequestHeader(value = "token", required = false) String token,
                                                               @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -112,7 +118,7 @@ public class ptController {
                     endAt = LocalDateTime.parse(endAtStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
                 }
             } catch (Exception e) {
-                throw new IllegalArgumentException("Invalid date format: " + e.getMessage());
+                throw new IllegalArgumentException("Định dạng ngày tháng không hợp lệ: " + e.getMessage());
             }
             String description = request.get("description");
 
@@ -128,7 +134,8 @@ public class ptController {
             }
         } catch (Exception e) {
             response.put("status", "error");
-            response.put("message", "Error occurred: " + e.getMessage());
+
+            response.put("message", "An error occurred: " + e.getMessage());
             return ResponseEntity.status(500).body(response);
         }
     }
