@@ -26,7 +26,11 @@ public class ptController {
     private final exerSession exerSession;
     private final ptService ptService;
 
+<<<<<<< HEAD
+    @PostMapping("/getInfoPt") // Phương thức lấy info pt
+=======
     @PostMapping("/getInfoPt")
+>>>>>>> 76a4d0b8eec43ac1a6039a63262f9223f11c0851
     public ResponseEntity<Map<String, Object>> getInfoPt(@RequestHeader(value = "token", required = false) String token,
                                                          @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -72,6 +76,7 @@ public class ptController {
             }
             int userId = Integer.parseInt(request.get("userid"));
             List<Map<String, Object>> sessions = exerSession.getAllSessionByPT(userId);
+
             if (sessions != null) {
                 response.put("status", "success");
                 response.put("data", sessions);
@@ -87,6 +92,7 @@ public class ptController {
             return ResponseEntity.status(500).body(response);
         }
     }
+
 
     @PostMapping("/updateSession")
     public ResponseEntity<Map<String, Object>> updateSession(@RequestHeader(value = "token", required = false) String token,
@@ -128,6 +134,7 @@ public class ptController {
             }
         } catch (Exception e) {
             response.put("status", "error");
+
             response.put("message", "An error occurred: " + e.getMessage());
             return ResponseEntity.status(500).body(response);
         }
