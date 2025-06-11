@@ -36,7 +36,5 @@ public class payment {
 
     @Column(name = "createAt",nullable = false)
     private LocalDateTime createAt;
-
-
-
+    
 }
